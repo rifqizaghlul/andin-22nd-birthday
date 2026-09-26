@@ -50,20 +50,13 @@
             border: 1px solid rgba(255, 255, 255, 0.25);
         }
         .glass-dark {
-            background: rgba(3, 23, 38, 0.65);
+            background: rgba(3, 23, 38, 0.75);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(56, 189, 248, 0.2);
         }
         .wave-bg {
             background: linear-gradient(180deg, #031726 0%, #075985 50%, #0284c7 100%);
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-12px) rotate(2deg); }
-        }
-        .animate-float {
-            animation: float 5s ease-in-out infinite;
         }
         .polaroid-shadow {
             box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3), 0 0 15px rgba(56, 189, 248, 0.2);
@@ -76,7 +69,7 @@
     <canvas id="oceanCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
 
     <!-- Header Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 glass-dark px-6 py-4">
+    <nav class="fixed top-0 left-0 right-0 z-40 glass-dark px-6 py-4">
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <span class="font-serif text-xl font-bold tracking-wider text-ocean-200 flex items-center gap-2">
                 <i class="fa-solid fa-water text-ocean-400"></i> Andin.me
@@ -128,7 +121,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Card 1 -->
                 <div class="glass-dark p-6 rounded-2xl space-y-4 hover:border-ocean-400/50 transition-all group">
                     <div class="w-12 h-12 rounded-xl bg-ocean-800/60 flex items-center justify-center text-ocean-400 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-compass text-2xl"></i>
@@ -139,7 +131,6 @@
                     </p>
                 </div>
 
-                <!-- Card 2 -->
                 <div class="glass-dark p-6 rounded-2xl space-y-4 hover:border-ocean-400/50 transition-all group">
                     <div class="w-12 h-12 rounded-xl bg-ocean-800/60 flex items-center justify-center text-cyan-400 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-fish-fins text-2xl"></i>
@@ -150,7 +141,6 @@
                     </p>
                 </div>
 
-                <!-- Card 3 -->
                 <div class="glass-dark p-6 rounded-2xl space-y-4 hover:border-ocean-400/50 transition-all group">
                     <div class="w-12 h-12 rounded-xl bg-ocean-800/60 flex items-center justify-center text-coral-400 group-hover:scale-110 transition-transform">
                         <i class="fa-solid fa-comments text-2xl"></i>
@@ -164,7 +154,7 @@
         </div>
     </section>
 
-    <!-- Photo Gallery Section (5 Photos) -->
+    <!-- Photo Gallery Section (6 Photos) -->
     <section id="gallery" class="py-20 px-4 relative z-10 bg-gradient-to-b from-ocean-deep to-ocean-900">
         <div class="max-w-5xl mx-auto">
             <div class="text-center mb-16 space-y-2">
@@ -172,7 +162,6 @@
                 <h2 class="text-3xl md:text-5xl font-serif font-bold text-white">Galeri Foto Andin</h2>
             </div>
 
-            <!-- Grid Layout for 5 Photos -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                 <!-- Foto 1 -->
                 <div class="polaroid-shadow bg-white p-4 rounded-xl text-slate-800 transform -rotate-2 hover:rotate-0 transition-transform duration-300">
@@ -195,11 +184,11 @@
                     <div class="overflow-hidden rounded-lg aspect-[4/5] bg-slate-100">
                         <img src="foto3.jpg" alt="Foto Andin 3" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/400x500?text=Foto+3'">
                     </div>
-                    <p class="font-handwriting text-2xl text-center mt-3 text-ocean-900">Mangan Terus 🍽️</p>
+                    <p class="font-handwriting text-2xl text-center mt-3 text-ocean-900">Mangan Terus 💡</p>
                 </div>
 
                 <!-- Foto 4 -->
-                <div class="polaroid-shadow bg-white p-4 rounded-xl text-slate-800 transform rotate-3 hover:rotate-0 transition-transform duration-300 md:col-start-1 md:ml-auto md:w-full">
+                <div class="polaroid-shadow bg-white p-4 rounded-xl text-slate-800 transform rotate-3 hover:rotate-0 transition-transform duration-300">
                     <div class="overflow-hidden rounded-lg aspect-[4/5] bg-slate-100">
                         <img src="foto4.jpg" alt="Foto Andin 4" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/400x500?text=Foto+4'">
                     </div>
@@ -207,19 +196,20 @@
                 </div>
 
                 <!-- Foto 5 -->
-                <div class="polaroid-shadow bg-white p-4 rounded-xl text-slate-800 transform -rotate-2 hover:rotate-0 transition-transform duration-300 sm:col-span-2 md:col-span-1">
+                <div class="polaroid-shadow bg-white p-4 rounded-xl text-slate-800 transform -rotate-2 hover:rotate-0 transition-transform duration-300">
                     <div class="overflow-hidden rounded-lg aspect-[4/5] bg-slate-100">
                         <img src="foto5.jpg" alt="Foto Andin 5" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/400x500?text=Foto+5'">
                     </div>
                     <p class="font-handwriting text-2xl text-center mt-3 text-ocean-900">Usia 22 Yang Indah ❤️</p>
                 </div>
+
                 <!-- Foto 6 -->
                 <div class="polaroid-shadow bg-white p-4 rounded-xl text-slate-800 transform rotate-2 hover:rotate-0 transition-transform duration-300">
                     <div class="overflow-hidden rounded-lg aspect-[4/5] bg-slate-100">
                         <img src="foto6.jpg" alt="Foto Andin 6" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.src='https://via.placeholder.com/400x500?text=Foto+6'">
                     </div>
                     <p class="font-handwriting text-2xl text-center mt-3 text-ocean-900">Bocah Plenger ✨</p>
-                </div>               
+                </div>
             </div>
         </div>
     </section>
@@ -230,7 +220,7 @@
             <i class="fa-solid fa-quote-left text-4xl text-ocean-400/50"></i>
             <h2 class="text-3xl font-serif font-bold text-white">Doa & Harapan Untuk Andin</h2>
             <p class="text-ocean-100 text-lg leading-relaxed italic">
-                "Selamat ulang tahun ke-22, Azfa Andina Putrie Nurliant! Semoga di usiamu yang baru ini, langkahmu semakin mantap dalam meraih mimpi di bidang ilmu kelautan dan setiap organisasi yang kamu pimpin. Tetaplah menjadi sosok yang hangat, menginspirasi, dan membawa kebahagiaan bagi banyak orang. Tetap jadi Andin yang selalu ceria dan serba bisa!"
+                "Selamat ulang tahun ke-22, Azfa Andina Putrie Nurliant! semoga setelah ultah yang ke 22 ini bisa jadi lebih baik dan bisa jadi contoh untuk adek nya serta bisa menjadi selayaknya anak pertama, see u on top! -R"
             </p>
             <div class="pt-4 border-t border-ocean-700/50 flex justify-center items-center gap-2 text-coral-400 font-semibold">
                 <i class="fa-solid fa-heart"></i> Dibuat dengan penuh cinta khusus untuk Andin <i class="fa-solid fa-heart"></i>
@@ -239,12 +229,30 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-8 text-center text-sm text-ocean-400 border-t border-ocean-800 relative z-10 bg-ocean-deep">
+    <footer class="py-8 text-center text-sm text-ocean-400 border-t border-ocean-800 relative z-10 bg-ocean-deep mb-16">
         <p>© 2026 • Dedicated to Azfa Andina Putrie Nurliant (andin.me)</p>
     </footer>
 
-    <!-- Canvas Animation Script -->
+    <!-- PEMUTAR MUSIK NIKI - ANAHEIM (FIXED POSISI PROMINENT) -->
+    <div class="fixed bottom-4 right-4 z-50 flex items-center gap-3 bg-slate-900/90 p-2.5 rounded-full border-2 border-coral-400 shadow-2xl backdrop-blur-lg">
+        <div class="flex items-center gap-2 pl-2 text-xs font-semibold text-white">
+            <i class="fa-solid fa-compact-disc text-coral-400 animate-spin" style="animation-duration: 4s;"></i>
+            <span class="pr-1">NIKI — Anaheim 🎵</span>
+        </div>
+
+        <audio id="bgMusic" loop preload="auto">
+            <source src="lagu.mp3" type="audio/mpeg">
+            Browser tidak mendukung pemutar audio.
+        </audio>
+        
+        <button id="musicBtn" onclick="toggleMusic()" class="w-12 h-12 rounded-full bg-gradient-to-r from-coral-500 to-pink-500 text-white shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300">
+            <i id="musicIcon" class="fa-solid fa-play text-lg ml-0.5"></i>
+        </button>
+    </div>
+
+    <!-- Script Animation & Music Control -->
     <script>
+        // Canvas Background Animation
         const canvas = document.getElementById('oceanCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -268,46 +276,22 @@
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
             bubbles.forEach(bubble => {
                 bubble.y -= bubble.speedY;
                 if (bubble.y < 0) {
                     bubble.y = canvas.height;
                     bubble.x = Math.random() * canvas.width;
                 }
-                
                 ctx.beginPath();
                 ctx.arc(bubble.x, bubble.y, bubble.radius, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(56, 189, 248, ${bubble.opacity})`;
                 ctx.fill();
             });
-
             requestAnimationFrame(animate);
         }
         animate();
-    </script>
-<!-- Pemutar Musik Latar (NIKI - Anaheim) -->
-    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
-        <!-- Label Informasi Lagu -->
-        <div class="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-full glass text-xs text-white shadow-lg border border-white/20 backdrop-blur-md">
-            <i class="fa-solid fa-compact-disc text-coral-400 animate-spin" style="animation-duration: 4s;"></i>
-            <span class="font-medium">NIKI — Anaheim 🎵</span>
-        </div>
 
-        <!-- Tag Audio -->
-        <audio id="bgMusic" loop preload="auto">
-            <source src="lagu.mp3" type="audio/mpeg">
-            Browser kamu tidak mendukung pemutar musik.
-        </audio>
-        
-        <!-- Tombol Play / Pause -->
-        <button id="musicBtn" onclick="toggleMusic()" class="w-14 h-14 rounded-full bg-gradient-to-r from-coral-500 to-pink-500 text-white shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 border-2 border-white/50">
-            <i id="musicIcon" class="fa-solid fa-music text-xl"></i>
-        </button>
-    </div>
-
-    <!-- Script Kontrol Musik -->
-    <script>
+        // Audio Controller
         const music = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
         const musicIcon = document.getElementById('musicIcon');
@@ -315,28 +299,23 @@
         function toggleMusic() {
             if (music.paused) {
                 music.play().then(() => {
-                    musicIcon.className = "fa-solid fa-pause text-xl";
-                    musicBtn.classList.add("animate-spin");
-                    musicBtn.style.animationDuration = "6s";
-                }).catch(err => console.log("Audio play error:", err));
+                    musicIcon.className = "fa-solid fa-pause text-lg";
+                }).catch(err => console.log("Gagal memutar audio:", err));
             } else {
                 music.pause();
-                musicIcon.className = "fa-solid fa-music text-xl";
-                musicBtn.classList.remove("animate-spin");
+                musicIcon.className = "fa-solid fa-play text-lg ml-0.5";
             }
         }
 
-        // Putar lagu otomatis saat ada klik pertama dari pengunjung di layar
-        document.addEventListener('click', function startOnInteraction() {
+        // Otomatis putar lagu saat pertama kali ada klik di halaman
+        document.addEventListener('click', function startAudio() {
             if (music.paused) {
                 music.play().then(() => {
-                    musicIcon.className = "fa-solid fa-pause text-xl";
-                    musicBtn.classList.add("animate-spin");
-                    musicBtn.style.animationDuration = "6s";
+                    musicIcon.className = "fa-solid fa-pause text-lg";
                 }).catch(() => {});
             }
-            document.removeEventListener('click', startOnInteraction);
+            document.removeEventListener('click', startAudio);
         }, { once: true });
-    </script>   
+    </script>
 </body>
 </html>
