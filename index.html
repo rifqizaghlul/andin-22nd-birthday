@@ -317,5 +317,227 @@
             document.removeEventListener('click', startAudio);
         }, { once: true });
     </script>
+    <!-- Interactive Game Section -->
+    <section id="game-section" class="py-20 px-4 relative z-10 bg-ocean-deep border-t border-ocean-800 text-center">
+        <div class="max-w-4xl mx-auto space-y-4">
+            <span class="font-handwriting text-3xl text-coral-400">Interactive Game For Andin</span>
+            <h2 class="text-3xl md:text-4xl font-serif font-bold text-white">Beri Makan Ikan Samudera! 🐟❤️</h2>
+            <p class="text-ocean-200 text-sm md:text-base max-w-lg mx-auto">
+                Arahkan ikan menggunakan <strong>mouse / sentuhan jari kamu</strong> untuk memakan hati. Beri makan sampai 6 kali untuk melihat kejutan!
+            </p>
+
+            <!-- Game Box Canvas Container -->
+            <div class="relative w-full max-w-2xl mx-auto h-[350px] md:h-[420px] rounded-2xl overflow-hidden glass-dark border-2 border-ocean-400/40 shadow-2xl mt-6 cursor-none touch-none">
+                <canvas id="fishGameCanvas" class="w-full h-full"></canvas>
+                
+                <!-- Score / Counter Badge -->
+                <div class="absolute top-4 left-4 glass px-4 py-2 rounded-full text-xs md:text-sm font-bold text-white flex items-center gap-2 border border-white/20">
+                    <span id="gameScoreText">Makanan Terkumpul: 0 / 6</span> ❤️
+                </div>
+
+                <!-- Touch Instruction Overlay for Mobile -->
+                <div id="gameInstruction" class="absolute inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center pointer-events-none transition-opacity duration-500">
+                    <p class="text-white text-sm font-semibold bg-ocean-800/80 px-4 py-2 rounded-full border border-ocean-400">
+                        👆 Gerakkan kursor / usap layar untuk mengarahkan ikan!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Logic Script -->
+    <script>
+        const gameCanvas = document.getElementById('fishGameCanvas');
+        const gCtx = gameCanvas.getContext('2d');
+        const scoreText = document.getElementById('gameScoreText');
+        const instruction = document.getElementById('gameInstruction');
+
+        function resizeGameCanvas() {
+            const rect = gameCanvas.getBoundingClientRect();
+            gameCanvas.width = rect.width;
+            gameCanvas.height = rect.height;
+        }
+        resizeGameCanvas();
+        window.addEventListener('resize', resizeGameCanvas);
+
+        let eatenCount = 0;
+        let isGameOver = false;
+
+        // Fish properties
+        let fish = {
+            x: gameCanvas.width / 2,
+            y: gameCanvas.height / 2,
+            targetX: gameCanvas.width / 2,
+            targetY: gameCanvas.height / 2,
+            baseSize: 18,
+            currentSize: 18,
+            angle: 0
+        };
+
+        // Food property
+        let food = {
+            x: Math.random() * (gameCanvas.width - 60) + 30,
+            y: Math.random() * (gameCanvas.height - 60) + 30,
+            size: 16,
+            pulse: 0
+        };
+
+        // Particles for celebratory effect
+        let particles = [];
+
+        // Mouse & Touch Event Listeners
+        function updatePointerPos(e) {
+            const rect = gameCanvas.getBoundingClientRect();
+            let clientX = e.clientX;
+            let clientY = e.clientY;
+
+            if (e.touches && e.touches.length > 0) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            }
+
+            fish.targetX = clientX - rect.left;
+            fish.targetY = clientY - rect.top;
+
+            if (instruction) instruction.style.opacity = '0';
+        }
+
+        gameCanvas.addEventListener('mousemove', updatePointerPos);
+        gameCanvas.addEventListener('touchmove', updatePointerPos);
+        gameCanvas.addEventListener('touchstart', updatePointerPos);
+
+        function drawHeart(x, y, size, color) {
+            gCtx.save();
+            gCtx.beginPath();
+            gCtx.fillStyle = color;
+            let topCurveHeight = size * 0.3;
+            gCtx.moveTo(x, y + topCurveHeight);
+            // bezier curve for heart shape
+            gCtx.bezierCurveTo(x, y, x - size / 2, y, x - size / 2, y + topCurveHeight);
+            gCtx.bezierCurveTo(x - size / 2, y + (size + topCurveHeight) / 2, x, y + size, x, y + size);
+            gCtx.bezierCurveTo(x, y + size, x + size / 2, y + (size + topCurveHeight) / 2, x + size / 2, y + topCurveHeight);
+            gCtx.bezierCurveTo(x + size / 2, y, x, y, x, y + topCurveHeight);
+            gCtx.closePath();
+            gCtx.fill();
+            gCtx.restore();
+        }
+
+        function drawFish(x, y, size, angle) {
+            gCtx.save();
+            gCtx.translate(x, y);
+            gCtx.rotate(angle);
+
+            // Fish body
+            gCtx.fillStyle = '#0284c7';
+            gCtx.beginPath();
+            gCtx.ellipse(0, 0, size * 1.4, size * 0.8, 0, 0, Math.PI * 2);
+            gCtx.fill();
+
+            // Fish Tail
+            gCtx.fillStyle = '#fb7185';
+            gCtx.beginPath();
+            gCtx.moveTo(-size * 1.2, 0);
+            gCtx.lineTo(-size * 2, -size * 0.7);
+            gCtx.lineTo(-size * 2, size * 0.7);
+            gCtx.closePath();
+            gCtx.fill();
+
+            // Fish Eye
+            gCtx.fillStyle = '#ffffff';
+            gCtx.beginPath();
+            gCtx.arc(size * 0.7, -size * 0.2, size * 0.25, 0, Math.PI * 2);
+            gCtx.fill();
+
+            gCtx.fillStyle = '#000000';
+            gCtx.beginPath();
+            gCtx.arc(size * 0.75, -size * 0.2, size * 0.12, 0, Math.PI * 2);
+            gCtx.fill();
+
+            gCtx.restore();
+        }
+
+        function createParticles(x, y) {
+            for (let i = 0; i < 30; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 8,
+                    vy: (Math.random() - 0.5) * 8,
+                    color: ['#fb7185', '#38bdf8', '#f43f5e', '#fef08a'][Math.floor(Math.random() * 4)],
+                    life: 40
+                });
+            }
+        }
+
+        function updateGame() {
+            gCtx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+            // Move Fish smoothly towards pointer
+            let dx = fish.targetX - fish.x;
+            let dy = fish.targetY - fish.y;
+            fish.x += dx * 0.1;
+            fish.y += dy * 0.1;
+
+            if (Math.abs(dx) > 1 || Math.abs(dy) > 1) {
+                fish.angle = Math.atan2(dy, dx);
+            }
+
+            // Draw Food (Heart) if game not over
+            if (eatenCount < 6) {
+                food.pulse += 0.05;
+                let scale = 1 + Math.sin(food.pulse) * 0.15;
+                drawHeart(food.x, food.y, food.size * scale, '#f43f5e');
+
+                // Check Collision
+                let dist = Math.hypot(fish.x - food.x, fish.y - food.y);
+                if (dist < fish.currentSize + food.size) {
+                    eatenCount++;
+                    fish.currentSize += 8; // Ikan makin bertambah gede
+                    scoreText.innerText = `Makanan Terkumpul: ${eatenCount} / 6`;
+                    
+                    // Spawn new food
+                    food.x = Math.random() * (gameCanvas.width - 80) + 40;
+                    food.y = Math.random() * (gameCanvas.height - 80) + 40;
+
+                    if (eatenCount === 6) {
+                        isGameOver = true;
+                        createParticles(gameCanvas.width / 2, gameCanvas.height / 2);
+                    }
+                }
+            }
+
+            // Draw Fish
+            drawFish(fish.x, fish.y, fish.currentSize, fish.angle);
+
+            // If 6 hearts eaten -> Show HBD Big Message
+            if (isGameOver) {
+                // Update particles
+                particles.forEach((p, idx) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.life--;
+                    gCtx.fillStyle = p.color;
+                    gCtx.beginPath();
+                    gCtx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+                    gCtx.fill();
+                });
+
+                // Display Big HBD Banner
+                gCtx.save();
+                gCtx.textAlign = "center";
+                gCtx.textBaseline = "middle";
+                gCtx.font = "bold 32px 'Playfair Display', serif";
+                gCtx.fillStyle = "#ffffff";
+                gCtx.shadowColor = "#f43f5e";
+                gCtx.shadowBlur = 15;
+                gCtx.fillText("HAPPY BIRTHDAY ANDIN! 🎉🎂", gameCanvas.width / 2, gameCanvas.height / 2);
+                gCtx.restore();
+            }
+
+            requestAnimationFrame(updateGame);
+        }
+
+        updateGame();
+    </script>
 </body>
 </html>
