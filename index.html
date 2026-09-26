@@ -286,5 +286,57 @@
         }
         animate();
     </script>
+<!-- Pemutar Musik Latar (NIKI - Anaheim) -->
+    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-3">
+        <!-- Label Informasi Lagu -->
+        <div class="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-full glass text-xs text-white shadow-lg border border-white/20 backdrop-blur-md">
+            <i class="fa-solid fa-compact-disc text-coral-400 animate-spin" style="animation-duration: 4s;"></i>
+            <span class="font-medium">NIKI — Anaheim 🎵</span>
+        </div>
+
+        <!-- Tag Audio -->
+        <audio id="bgMusic" loop preload="auto">
+            <source src="lagu.mp3" type="audio/mpeg">
+            Browser kamu tidak mendukung pemutar musik.
+        </audio>
+        
+        <!-- Tombol Play / Pause -->
+        <button id="musicBtn" onclick="toggleMusic()" class="w-14 h-14 rounded-full bg-gradient-to-r from-coral-500 to-pink-500 text-white shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 border-2 border-white/50">
+            <i id="musicIcon" class="fa-solid fa-music text-xl"></i>
+        </button>
+    </div>
+
+    <!-- Script Kontrol Musik -->
+    <script>
+        const music = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        const musicIcon = document.getElementById('musicIcon');
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play().then(() => {
+                    musicIcon.className = "fa-solid fa-pause text-xl";
+                    musicBtn.classList.add("animate-spin");
+                    musicBtn.style.animationDuration = "6s";
+                }).catch(err => console.log("Audio play error:", err));
+            } else {
+                music.pause();
+                musicIcon.className = "fa-solid fa-music text-xl";
+                musicBtn.classList.remove("animate-spin");
+            }
+        }
+
+        // Putar lagu otomatis saat ada klik pertama dari pengunjung di layar
+        document.addEventListener('click', function startOnInteraction() {
+            if (music.paused) {
+                music.play().then(() => {
+                    musicIcon.className = "fa-solid fa-pause text-xl";
+                    musicBtn.classList.add("animate-spin");
+                    musicBtn.style.animationDuration = "6s";
+                }).catch(() => {});
+            }
+            document.removeEventListener('click', startOnInteraction);
+        }, { once: true });
+    </script>   
 </body>
 </html>
