@@ -247,7 +247,7 @@
                 
                 <!-- Score / Counter Badge -->
                 <div class="absolute top-4 left-4 glass px-4 py-2 rounded-full text-xs md:text-sm font-bold text-white flex items-center gap-2 border border-white/20">
-                    <span id="gameScoreText">Makanan Terkumpul: 0 / 6</span> ❤️
+                    <span id="gameScoreText">Makanan Terkumpul: 0 / 22</span> ❤️
                 </div>
 
                 <!-- Touch Instruction Overlay for Mobile -->
@@ -479,7 +479,7 @@
             fish.currentSize = fish.baseSize;
             fish.x = gameCanvas.width / 2;
             fish.y = gameCanvas.height / 2;
-            scoreText.innerText = `Makanan Terkumpul: 0 / 6`;
+            scoreText.innerText = `Makanan Terkumpul: 0 / 22`;
             food.x = Math.random() * (gameCanvas.width - 80) + 40;
             food.y = Math.random() * (gameCanvas.height - 80) + 40;
             particles = [];
@@ -498,7 +498,7 @@
                 fish.angle = Math.atan2(dy, dx);
             }
 
-            if (eatenCount < 6) {
+            if (eatenCount < 22) {
                 food.pulse += 0.05;
                 let scale = 1 + Math.sin(food.pulse) * 0.15;
                 drawHeart(food.x, food.y, food.size * scale, '#f43f5e');
@@ -506,13 +506,13 @@
                 let dist = Math.hypot(fish.x - food.x, fish.y - food.y);
                 if (dist < fish.currentSize + food.size) {
                     eatenCount++;
-                    fish.currentSize += 8;
+                    fish.currentSize += 2;
                     scoreText.innerText = `Makanan Terkumpul: ${eatenCount} / 6`;
                     
                     food.x = Math.random() * (gameCanvas.width - 80) + 40;
                     food.y = Math.random() * (gameCanvas.height - 80) + 40;
 
-                    if (eatenCount === 6) {
+                    if (eatenCount === 22) {
                         isGameOver = true;
                         createParticles(gameCanvas.width / 2, gameCanvas.height / 2);
                     }
