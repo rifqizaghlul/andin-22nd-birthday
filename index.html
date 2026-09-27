@@ -238,7 +238,7 @@
             <span class="font-handwriting text-3xl text-coral-400">Interactive Game For Andin</span>
             <h2 class="text-3xl md:text-4xl font-serif font-bold text-white">Beri Makan Ikan Samudera! 🐟❤️</h2>
             <p class="text-ocean-200 text-sm md:text-base max-w-lg mx-auto">
-                Arahkan ikan menggunakan <strong>mouse / sentuhan jari kamu</strong> untuk memakan hati. Beri makan sampai 6 kali untuk melihat kejutan!
+                Arahkan ikan menggunakan <strong>mouse / sentuhan jari kamu</strong> untuk memakan hati. Beri makan sampai 22 kali untuk melihat kejutan!
             </p>
 
             <!-- Game Box Canvas Container -->
@@ -507,7 +507,7 @@
                 if (dist < fish.currentSize + food.size) {
                     eatenCount++;
                     fish.currentSize += 2;
-                    scoreText.innerText = `Makanan Terkumpul: ${eatenCount} / 6`;
+                    scoreText.innerText = `Makanan Terkumpul: ${eatenCount} / 22`;
                     
                     food.x = Math.random() * (gameCanvas.width - 80) + 40;
                     food.y = Math.random() * (gameCanvas.height - 80) + 40;
